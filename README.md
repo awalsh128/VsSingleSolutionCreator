@@ -11,6 +11,7 @@ This should be ran out of your Visual Studio IDE; if you want to change the argu
     Project.RootFilepath = @"e:\code\trunk";
     bool writeFiles = false;            // Set to false if you want to debug and test run.
     bool writeFilesAsModified = true;   // Set to true if you want new project files to be written outside of SCC.
+    var exemptDirectories = new string[] { "ExemptProjectDirectory" };
 ```
 	
 This program will only be ran once for most users. If you have a need to make this a command line tool, please let me know and I can update it.
