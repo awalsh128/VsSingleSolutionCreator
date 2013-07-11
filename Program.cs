@@ -15,7 +15,7 @@ namespace VsSingleSolutionCreator
 			Project.RootFilepath = @"e:\code\trunk";
 			bool writeFiles = false;					// Set to false if you want to debug and test run.
 			bool writeFilesAsModified = true;		// Set to true if you want new project files to be written outside of SCC.
-			var exemptDirectories = new string[] { "ExemptProject" };
+			var exemptDirectories = new string[] { "ExemptProjectDirectory" };
 
 			Console.WriteLine("Getting projects in " + Project.RootFilepath);
 			// get all projects as name to project map			
