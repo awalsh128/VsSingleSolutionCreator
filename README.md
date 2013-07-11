@@ -4,7 +4,7 @@ Given a root directory, this program will rewrite all projects to reference each
 
 ## Basic Usage
 
-This should be ran out of your Visual Studio IDE; if you want to change the arguments it can be done be reassigning the top variable values.
+This should be ran out of your Visual Studio IDE; if you want to change the arguments it can be done by reassigning the top variable values.
 
 ```C#
     // customize the behavior of the program here
