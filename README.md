@@ -4,14 +4,24 @@ Given a root directory, this program will rewrite all projects to reference each
 
 ## Basic Usage
 
-This should be ran out of your Visual Studio IDE; if you want to change the arguments it can be done by reassigning the top variable values.
+Get help:
 
-```C#
-    // customize the behavior of the program here
-    Project.RootFilepath = @"e:\code\trunk";
-    bool writeFiles = false;            // Set to false if you want to debug and test run.
-    bool writeFilesAsModified = true;   // Set to true if you want new project files to be written outside of SCC.
-    var exemptDirectories = new string[] { "ExemptProjectDirectory" };
-```
-	
-This program will only be ran once for most users. If you have a need to make this a command line tool, please let me know and I can update it.
+	> VsSingleSolutionCreator.exe --help
+	VsSingleSolutionCreator 1.0.0.0
+	Copyright Andrew Walsh 2013
+
+	  -r, --root                    Required. Root path of code base
+
+	  -w, --writeFiles              If set files will be modified, otherwise it
+	                                will just be a test run
+
+	  -m, --writeFilesAsModified    If set new project files will be generated in
+	                                parallel leaving the original files unmodified
+
+	  -e, --exemptDirectories       Directories to exclude from processing
+
+	  --help                        Display this help screen.
+
+Create single solution:
+
+	> VsSingleSolutionCreator.exe -r "C:\Projects" -w
