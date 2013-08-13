@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommandLine;
+using CommandLine.Text;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,15 +9,49 @@ using System.Xml;
 
 namespace VsSingleSolutionCreator
 {
+	class Options
+	{
+		[Option('r', "root", 
+			Required = true,
+			HelpText = "Root path of code base")]
+		public string Root { get; set; }
+
+		[Option('w', "writeFiles", 
+			Required = false,
+			HelpText = "If specified files will be modified, otherwise it will just be a test run")]
+		public bool WriteFiles { get; set; }
+
+		[Option('m', "writeFilesAsModified", 
+			Required = false,
+			HelpText = "If specified new project files will be generated in parallel leaving the original files unmodified")]
+		public bool WriteFilesAsModified { get; set; }
+
+		[OptionArray('e', "exemptDirectories",
+			HelpText = "Directories to exclude from processing")]
+		public string[] ExemptDirectories { get; set; }
+
+		[HelpOption]
+		public string GetUsage()
+		{
+			return HelpText.AutoBuild(this, current => HelpText.DefaultParsingErrorsHandler(this, current));
+		}
+	}
+
 	class Program
 	{
-		static void Main(string[] args)
+		static int Main(string[] args)
 		{
-			// customize the behavior of the program here
-			Project.RootFilepath = @"e:\code\trunk";
-			bool writeFiles = false;					// Set to false if you want to debug and test run.
-			bool writeFilesAsModified = true;		// Set to true if you want new project files to be written outside of SCC.
-			var exemptDirectories = new string[] { "ExemptProjectDirectory" };
+			var options = new Options();
+
+			if (!Parser.Default.ParseArguments(args, options))
+			{
+				return Parser.DefaultExitCodeFail;
+			}
+
+			Project.RootFilepath = options.Root;
+			bool writeFiles = options.WriteFiles;
+			bool writeFilesAsModified = options.WriteFilesAsModified;
+			var exemptDirectories = options.ExemptDirectories;
 
 			Console.WriteLine("Getting projects in " + Project.RootFilepath);
 			// get all projects as name to project map			
@@ -57,6 +93,8 @@ namespace VsSingleSolutionCreator
 
 			Console.WriteLine("\nFinished, press any key to exit...");
 			Console.ReadKey();
+
+			return 0;
 		}
 
 		static void AddReferencingProjects(Project project, Dictionary<string, List<Project>> assemblyNameFileReferencesToProjects)
